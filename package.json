@@ -2,6 +2,7 @@
   "name": "data-viz",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://shaminmeerankutty.github.io/data-viz",
   "dependencies": {
     "axios": "^0.18.0",
     "d3": "^5.9.2",

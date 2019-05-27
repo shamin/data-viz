@@ -140,7 +140,7 @@ export default class DataTable extends React.Component {
           </Table.VirtualBody>
         </Table>
 
-        <Pagination selected={this.state.selectedPage} pages={data.length/perPage} onSelect={(page=>{this.setState({selectedPage: page})})}/>
+        <Pagination selected={this.state.selectedPage} pages={Math.ceil(data.length/perPage)} onSelect={(page=>{this.setState({selectedPage: page})})}/>
       </div>
     )
   }
