@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+  - "stable"
+cache:
+  directories:
+    - ~/.npm
+notifications:
+  email:
+    recipients:
+      - shamin616@gmail.com
+    on_success: always
+    on_failure: always
+script:
+  - npm run build
+deploy:
+  provider: pages
+  skip-cleanup: true
+  keep-history: true
+  github-token: $GITHUB_TOKEN
+  local-dir: public
+  target-branch: gh-pages
+  on:
+    branch: master
