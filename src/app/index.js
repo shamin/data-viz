@@ -3,7 +3,7 @@ import axios from "axios"
 import { data_endpoint } from "./api"
 import Datepicker from "./datepicker"
 import Chart from "./chart"
-import Table from "./table"
+import Table from "./datatable"
 
 function App() {
   const [data, setData] = useState({records: [], error: false})
