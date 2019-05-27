@@ -27,7 +27,7 @@ class Chart extends React.Component{
     const { data } = this.props
     this.xScale = d3.scaleTime().domain([d3.min(data, d => new Date(d.timestamp)), d3.max(data, d => new Date(d.timestamp))]).range([0 + margin.left, width - margin.right])
     this.yScale = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.revenue)])
+      .domain([0, d3.max(data, d =>  (d.revenue/d.impressions) * 1000)])
       .range([height - margin.top, 0 + margin.bottom])
 
     this.xAxis = d3.axisBottom(this.xScale)
@@ -35,7 +35,7 @@ class Chart extends React.Component{
 
     this.line = d3.line()
       .x(d => this.xScale(new Date(d.timestamp)))
-      .y(d => this.yScale(d.revenue))
+      .y(d => this.yScale((d.revenue/d.impressions) * 1000))
     
     this.setState({
       chart: this.line(data)

@@ -17,7 +17,7 @@ const Order = {
   DESC: "DESC"
 }
 
-const header = ["timestamp", "game", "revenue", "impressions"]
+const header = ["timestamp", "game", "revenue", "impressions", "ecpm"]
 
 export default class DataTable extends React.Component {
   constructor(props) {
@@ -38,6 +38,19 @@ export default class DataTable extends React.Component {
 
     let propKey = header[orderedColumn]
 
+    if(propKey === "ecpm")
+      return [...data].sort((a, b) => {
+        let aValue = (a.revenue/a.impressions) * 1000
+        let bValue = (b.revenue/b.impressions) * 1000
+  
+        const sortTable = { true: 1, false: -1 }
+  
+        if (this.state.ordering === Order.ASC) {
+          return aValue === bValue ? 0 : sortTable[aValue > bValue]
+        }
+  
+        return bValue === aValue ? 0 : sortTable[bValue > aValue]
+      })
     return [...data].sort((a, b) => {
       let aValue = a[propKey]
       let bValue = b[propKey]
@@ -111,6 +124,7 @@ export default class DataTable extends React.Component {
         <Table.TextCell>{d.game}</Table.TextCell>
         <Table.TextCell isNumber>{d.revenue}</Table.TextCell>
         <Table.TextCell isNumber>{d.impressions}</Table.TextCell>
+        <Table.TextCell isNumber>{((d.revenue/d.impressions) * 1000).toFixed(3)}</Table.TextCell>
       </Table.Row>
     )
   }
@@ -121,7 +135,7 @@ export default class DataTable extends React.Component {
     const dataSorted = this.sort(data).slice((selectedPage - 1) * perPage, (selectedPage * perPage))
     return (
       <div>
-        <div>
+        <div className="dropdown">
           <Text size={500}>Items per page</Text>
           <Combobox
             items={[5, 10]}

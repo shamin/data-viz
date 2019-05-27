@@ -46,13 +46,15 @@ function App() {
         onDateSelected={(dates)=>{setDates(dates)}}
       />
       <div className="visualizations">
-        <Text size={500}>Select Game</Text>
-        <Combobox
-          items={["Callbreak Multiplier", "World Cricket Championship", "Both"]}
-          width={250}
-          defaultSelectedItem={"Callbreak Multiplier"}
-          onChange={selected => {setGame(selected)}}
-        />
+        <div className="dropdown">
+          <Text size={500}>Select Game</Text>
+          <Combobox
+            items={["Callbreak Multiplier", "World Cricket Championship", "Both"]}
+            width={250}
+            defaultSelectedItem={"Callbreak Multiplier"}
+            onChange={selected => {setGame(selected)}}
+          />
+        </div>
       </div>
       {
         records.length > 0 ?
