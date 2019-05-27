@@ -5,7 +5,9 @@ import {
   Popover,
   Position,
   Menu,
-  TextDropdownButton
+  TextDropdownButton,
+  Combobox,
+  Text
 } from "evergreen-ui"
 import Pagination from "./pagination"
 
@@ -119,15 +121,25 @@ export default class DataTable extends React.Component {
     const dataSorted = this.sort(data).slice((selectedPage - 1) * perPage, (selectedPage * perPage))
     return (
       <div>
+        <div>
+          <Text size={500}>Items per page</Text>
+          <Combobox
+            items={[5, 10]}
+            width={70}
+            defaultSelectedItem={perPage}
+            onChange={selected => {this.setState({perPage: selected, selectedPage: 1})}}
+          />
+        </div>
         <Table border>
           <Table.Head>
             {header.map((h, i)=>this.renderHeader(h, i))}
             <Table.HeaderCell width={48} flex="none" />
           </Table.Head>
-          <Table.VirtualBody height={640}>
+          <Table.VirtualBody height={47*perPage}>
             {dataSorted.map((item, i) => this.renderRow(item, i))}
           </Table.VirtualBody>
         </Table>
+
         <Pagination selected={this.state.selectedPage} pages={data.length/perPage} onSelect={(page=>{this.setState({selectedPage: page})})}/>
       </div>
     )

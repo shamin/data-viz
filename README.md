@@ -1,5 +1,4 @@
 # Data Viz
-Coding challenge for greedy game
 
 ## Available Scripts
 
