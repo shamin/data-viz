@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react"
+import { Heading, Text, Combobox } from "evergreen-ui"
 import axios from "axios"
 import { data_endpoint } from "./api"
 import { rangeBetween } from "./utils"
@@ -9,6 +10,7 @@ import Table from "./datatable"
 function App() {
   const [data, setData] = useState({records: [], error: false})
   const [dates, setDates] = useState({startDate: null, endDate: null})
+  const [game, setGame] = useState("Callbreak Multiplier")
 
   useEffect(() => {
     fetchData()
@@ -25,28 +27,43 @@ function App() {
 
   function getFilteredData({records}) {
     const {startDate, endDate} = dates
+    let newRecords = [...records]
+    if(game !== "Both")
+      newRecords = records.filter((d)=>(d.game === game))
     if((startDate && endDate) && (startDate.isValid() && endDate.isValid())) {
       const range = rangeBetween(startDate, endDate)
-      return records.filter((d)=>range(d.timestamp))
+      return newRecords.filter((d)=>range(d.timestamp))
     }
-    return records
+    return newRecords
   }
 
   const records = getFilteredData(data)
 
   return (
-    <div className="App">
+    <div className="app">
+      <Heading size={800} marginTop="default" textAlign="center" marginBottom="20">Welcome to Data Viz</Heading>
       <Datepicker 
         onDateSelected={(dates)=>{setDates(dates)}}
       />
+      <div className="visualizations">
+        <Text size={500}>Select Game</Text>
+        <Combobox
+          items={["Callbreak Multiplier", "World Cricket Championship", "Both"]}
+          width={250}
+          defaultSelectedItem={"Callbreak Multiplier"}
+          onChange={selected => {setGame(selected)}}
+        />
+      </div>
       {
         records.length > 0 ?
-          (<>
+          (<div className="visualizations">
+            <Heading size={500} marginTop="default" textAlign="center" marginBottom="20">Chart View</Heading>
             <Chart data={records}></Chart>
+            <Heading size={500} marginTop="default" textAlign="center" marginBottom="20">Table View</Heading>
             <Table data={records}></Table>
-          </>)
+          </div>)
           :
-          <div>No data available for the date range</div>
+          <div className="visualizations">No data available for the date range</div>
       }
       
     </div>

@@ -2,8 +2,8 @@ import React from "react"
 import PropTypes from "prop-types"
 import * as d3 from "d3"
 
-const width = 500
-const height = 300
+const width = document.body.clientWidth > 1000 ? 1000 : document.body.clientWidth
+const height = width / 3
 const margin = {
   left: 50,
   right: 20,
@@ -52,8 +52,8 @@ class Chart extends React.Component{
 
   render() {
     return(
-      <svg width={width} height={height}>
-        <path d={this.state.chart} fill='none' stroke="red"></path>
+      <svg className="chart" width={width} height={height}>
+        <path d={this.state.chart} fill='none' stroke="#1070CA"></path>
         <g>
           <g ref="xAxis" transform={`translate(0, ${height-margin.bottom})`}></g>
           <g ref="yAxis" transform={`translate(${margin.left}, 0)`}></g>

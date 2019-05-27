@@ -15,18 +15,20 @@ function DatePicker(props) {
     }
   }
   return (
-    <DateRangePicker
-      startDate={date.startDate}
-      endDate={date.endDate}
-      startDateId="start_date"
-      endDateId="end_date"
-      onDatesChange={onDatesChange}
-      focusedInput={focused}
-      onFocusChange={(focused) =>
-        setFocused(focused)
-      }
-      isOutsideRange={day => (moment().diff(day) < 0)}
-    />
+    <div className="date-picker">
+      <DateRangePicker
+        startDate={date.startDate}
+        endDate={date.endDate}
+        startDateId="start_date"
+        endDateId="end_date"
+        onDatesChange={onDatesChange}
+        focusedInput={focused}
+        onFocusChange={(focused) =>
+          setFocused(focused)
+        }
+        isOutsideRange={day => (moment().diff(day) < 0)}
+      />
+    </div>
   )
 }
 
