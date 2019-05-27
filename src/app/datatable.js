@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from "prop-types"
 import {
   Table,
   Popover,
@@ -6,6 +7,7 @@ import {
   Menu,
   TextDropdownButton
 } from "evergreen-ui"
+import Pagination from "./pagination"
 
 const Order = {
   NONE: "NONE",
@@ -23,6 +25,8 @@ export default class DataTable extends React.Component {
       searchQuery: "",
       orderedColumn: 0,
       ordering: Order.ASC,
+      selectedPage: 1,
+      perPage: 5
     }
   }
 
@@ -59,7 +63,7 @@ export default class DataTable extends React.Component {
 
   renderHeader(text, index) {
     return (
-      <Table.TextHeaderCell>
+      <Table.TextHeaderCell key={text}>
         <Popover
           position={Position.BOTTOM_LEFT}
           content={({ close }) => (
@@ -100,7 +104,7 @@ export default class DataTable extends React.Component {
 
   renderRow(d, i) {
     return (
-      <Table.Row key={`${d.timestamp} ${i}`}>
+      <Table.Row key={`${d.timestamp} ${i} ${d.revenue}`}>
         <Table.TextCell>{d.timestamp}</Table.TextCell>
         <Table.TextCell>{d.game}</Table.TextCell>
         <Table.TextCell isNumber>{d.revenue}</Table.TextCell>
@@ -111,17 +115,25 @@ export default class DataTable extends React.Component {
 
   render() {
     const { data } = this.props 
-    const dataSorted = this.sort(data)
+    const { selectedPage, perPage } = this.state
+    const dataSorted = this.sort(data).slice((selectedPage - 1) * perPage, (selectedPage * perPage))
     return (
-      <Table border>
-        <Table.Head>
-          {header.map((h, i)=>this.renderHeader(h, i))}
-          <Table.HeaderCell width={48} flex="none" />
-        </Table.Head>
-        <Table.VirtualBody height={640}>
-          {dataSorted.map((item, i) => this.renderRow(item, i))}
-        </Table.VirtualBody>
-      </Table>
+      <div>
+        <Table border>
+          <Table.Head>
+            {header.map((h, i)=>this.renderHeader(h, i))}
+            <Table.HeaderCell width={48} flex="none" />
+          </Table.Head>
+          <Table.VirtualBody height={640}>
+            {dataSorted.map((item, i) => this.renderRow(item, i))}
+          </Table.VirtualBody>
+        </Table>
+        <Pagination selected={this.state.selectedPage} pages={data.length/perPage} onSelect={(page=>{this.setState({selectedPage: page})})}/>
+      </div>
     )
   }
+}
+
+DataTable.propTypes = {
+  data: PropTypes.array
 }
