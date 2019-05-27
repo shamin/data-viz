@@ -3,6 +3,7 @@ import axios from "axios"
 import { data_endpoint } from "./api"
 import Datepicker from "./datepicker"
 import Chart from "./chart"
+import Table from "./table"
 
 function App() {
   const [data, setData] = useState({records: [], error: false})
@@ -26,7 +27,7 @@ function App() {
         onDateSelected={(dates)=>{console.log(dates)}}
       />
       <Chart data={data.records}></Chart>
-      {/* {data.records.map((d)=><p key={d.timestamp}>{d.game}</p>)} */}
+      <Table data={data.records}></Table>
     </div>
   )
 }

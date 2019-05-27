@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "d3": "^5.9.2",
+    "evergreen-ui": "^4.16.0",
     "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-dates": "^20.2.0",
