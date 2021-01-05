@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://shaminmeerankutty.github.io/data-viz",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "d3": "^5.9.2",
     "evergreen-ui": "^4.16.0",
     "moment": "^2.24.0",
